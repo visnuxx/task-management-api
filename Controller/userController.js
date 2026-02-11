@@ -15,11 +15,11 @@ const register = async (req, res) => {
         var sql = "INSERT INTO users (name, email, password ) VALUES (?, ?,?)"
         await pool.execute(sql, [name, email, hashedPassword])
         res.status(201).json({
-            success: 'true',
+            success: true,
             message: "saved"
         })
     } catch (error) {
-      console.log(error)
+      next(error)
     }
 }
 
@@ -33,7 +33,7 @@ const login = async (req, res) => {
 
         if (row.length === 0) {
             return res.status(404).json({
-                success: 'false',
+                success: false,
                 message: 'invalid user'
             })
         }
@@ -42,7 +42,7 @@ const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch) {
             return res.status(401).json({
-                success: 'true',
+                success: true,
                 message: 'invalid password'
             })
         }
@@ -57,7 +57,7 @@ const login = async (req, res) => {
             token
         })
     } catch (error) {
-        throw (error)
+        next(error)
     }
 }
 
@@ -83,7 +83,7 @@ const profile = async (req, res) => {
             [userId])
         if (row.length === 0) {
             return res.status(404).json({
-                success: 'false',
+                success: false,
                 message: 'user not found'
             })
         }
@@ -91,7 +91,7 @@ const profile = async (req, res) => {
         res.json(data)
 
     } catch (error) {
-        throw (error)
+        next(error)
     }
 }
 

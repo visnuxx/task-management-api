@@ -4,7 +4,7 @@ const isAdmin = (req, res, next) => {
 
         if (req.user.role !== 'admin') {
             return res.status(403).json({
-                success: 'false',
+                success: false,
                 message: 'admin access required'
             })
         }
@@ -12,7 +12,7 @@ const isAdmin = (req, res, next) => {
     }
     catch (error) {
         res.status(403).json({
-            success: 'false',
+            success: false,
             message: 'header not found'
         })
     }

@@ -4,13 +4,13 @@ const taskValidate=(req,res,next)=>{
    
     if ( !title || !user_id) {
        return res.status(406).json({
-        success:'false',
+        success:false,
         message:'not valid title or user_id'})
     }
 
     if(title.trim().length<3 || title===" ") {
         return res.status(406).json({
-            success:'false',
+            success:false,
             message:'not valid title '})
        }
       
@@ -28,17 +28,17 @@ const updateValidate=(req,res,next)=>{
    
     if (!status || !title || !user_id) {
        return res.status(406).json({
-        success:'false',
+        success:false,
         message:'not valid title or user_id'})
     }
      if(title.trim().length<3 || title===" ") {
         return res.status(406).json({
-            success:'false',
+            success:false,
             message:'not valid title'})
        }
        if (status.trim()!=='done') {
          return res.status(406).json({
-            success:'false',
+            success:false,
             message:'not valid status'})
        }
     }

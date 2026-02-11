@@ -5,18 +5,18 @@ const create = async (req, res, next) => {
    try {
 
       const { title, user_id } = req.body
-      //  console.log('task',title,user_id)
+      console.log('task',title,user_id)
       const sqls = 'INSERT INTO task (title, user_id)VALUES (?, ?)'
       const [task] = await pool.execute(sqls, [title, user_id])
       if (task.affectedRows === 0) {
          return res.status(404).json({
-            success: "false",
+            success: 'false',
             message: 'user not found',
 
          })
       }
       res.status(201).json({
-         success: 'true:',
+         success: 'true',
          message: 'task assigned',
       })
 
@@ -54,11 +54,11 @@ const viewUser = async (req, res) => {
             LIMIT ${limit} OFFSET ${offset};
            
             `,
-
+            
          )
       // console.log(userData)
       res.status(200).json({
-         success: 'true',
+         success: true,
          userData
       })
 
@@ -70,18 +70,18 @@ const viewUser = async (req, res) => {
 updateStatus = async (req, res, next) => {
    try {
       const { status, title, user_id } = req.body
-      // console.log('data',status,title,user_id)
+     
 
       const [result] = await pool.execute('UPDATE task SET status = ? WHERE title = ? AND user_id = ?',
          [status, title, user_id])
       if (result.affectedRows === 0) {
          res.status(404).json({
-            success: 'false',
+            success:false,
             message: 'no users found'
          })
       }
       res.json({
-         success: 'true',
+         success: true,
          message: 'updated successfully'
       })
    } catch (error) {

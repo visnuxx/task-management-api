@@ -9,7 +9,7 @@ const auth = (req, res, next) => {
 
         if (!authHeader) {
             return res.status(403).json({
-                success: 'false',
+                success: false,
                 message: 'no token provided'
             })
         }
@@ -24,7 +24,7 @@ const auth = (req, res, next) => {
     } catch (error) {
 
         res.status(403).json({
-            success: 'false',
+            success: false,
             message: 'invalid token'
         })
 
