@@ -31,16 +31,3 @@ app.get('/home',(req,res,next)=>{
 
 module.exports=app
 
-// // app.listen(8000,async()=>{
-
-// //     console.log('Server started at 8000')
-
-// //     try {
-// //         await checkConnection();
-// //         console.log('db installed')
-
-// //     } catch (error) {
-// //         console.log('db error')
-// //         next(error)
-// //     }
-// })
