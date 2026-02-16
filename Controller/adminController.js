@@ -10,13 +10,13 @@ const create = async (req, res, next) => {
       const [task] = await pool.execute(sqls, [title, user_id])
       if (task.affectedRows === 0) {
          return res.status(404).json({
-            success: 'false',
+            success: false,
             message: 'user not found',
 
          })
       }
       res.status(201).json({
-         success: 'true',
+         success: true,
          message: 'task assigned',
       })
 
