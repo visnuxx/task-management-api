@@ -3,7 +3,7 @@ const {create,viewUser,updateStatus}=require('../Controller/adminController')
 const auth=require('../middleware/auth')
 const isAdmin=require('../middleware/isAdmin')
 const {taskValidate,updateValidate}=require('../validation/adminValidate')
-const loginLimit = require('../validation/validation')
+const loginLimit = require('../validation/rateLimit')
 
 
 

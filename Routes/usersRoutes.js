@@ -2,7 +2,7 @@ const express=require('express')
 const {register,login,profile} = require('../Controller/userController')
 const auth=require('../middleware/auth')
 const {registerValidate,loginValidate} =require('../validation/userValidate');
-const loginLimit = require('../validation/validation');
+const loginLimit = require('../validation/rateLimit');
 const router = express.Router();
 
 /**
