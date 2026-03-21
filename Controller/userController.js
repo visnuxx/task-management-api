@@ -1,7 +1,8 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
-const { checkConnection, pool } = require('../db')
+const Users = require('../models/userModels')
+// const { checkConnection, pool } = require('../db')
 
 dotenv.config();
 
@@ -10,14 +11,26 @@ const register = async (req, res) => {
 
     try {
         // console.log('data',req.body)
-        const { name, email, password } = req.body
-        const hashedPassword = await bcrypt.hash(password, 10)
-        var sql = "INSERT INTO users (name, email, password ) VALUES (?, ?,?)"
-        await pool.execute(sql, [name, email, hashedPassword])
-        res.status(201).json({
-            success: true,
-            message: "saved"
+        // const { name, email, password } = req.body
+        // const hashedPassword = await bcrypt.hash(password, 10)
+        // var sql = "INSERT INTO users (name, email, password ) VALUES (?, ?,?)"
+        // await pool.execute(sql, [name, email, hashedPassword])
+        // res.status(201).json({
+        //     success: true,
+        //     message: "saved"
+        // })
+
+        const {name , email , password}= req.body
+        const hashedPassword= await bcrypt.hash(password,10)
+        const role = "user"
+        await Users.create({
+            name,
+            email,
+            hashedPassword,
+            role,
         })
+
+        res.json({success:true,message:'data saved successfully'})
     } catch (error) {
       next(error)
     }

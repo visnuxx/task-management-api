@@ -2,7 +2,7 @@ const express=require('express');
 const swaggerUi=require('swagger-ui-express')
 const helmet=require('helmet')
 const swaggerSpec=require('./swagger')
-const { checkConnection } = require('./db');
+
 const userRoutes = require('./Routes/usersRoutes')
 const adminRoutes = require('./Routes/adminRoutes');
 const errorHandler = require('./errorHandler/errorHandler');

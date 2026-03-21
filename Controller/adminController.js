@@ -1,6 +1,4 @@
-const { pool } = require("../db");
-
-//assign task
+const users = require('../models/userModels')
 const create = async (req, res, next) => {
    try {
 
