@@ -1,14 +1,17 @@
-const express=require('express')
-const {create,viewUser,updateStatus}=require('../Controller/adminController')
-const auth=require('../middleware/auth')
-const isAdmin=require('../middleware/isAdmin')
-const {taskValidate,updateValidate}=require('../validation/adminValidate')
+const express = require('express')
+const { create, viewUser, updateStatus, register } = require('../Controller/adminController')
+const auth = require('../middleware/auth')
+const isAdmin = require('../middleware/isAdmin')
+const { taskValidate, updateValidate } = require('../validation/adminValidate')
 const loginLimit = require('../validation/rateLimit')
+const { registerValidate } = require('../validation/userValidate')
 
 
 
 const router = express.Router();
 
+
+router.post('/api/admin/register', loginLimit, registerValidate, register)
 /**
  * @swagger
  * /api/admin/create:
@@ -32,7 +35,7 @@ const router = express.Router();
  *       200:
  *         description: Task assigned
  */
-router.post('/api/admin/create',taskValidate,auth,isAdmin,create)
+router.post('/api/admin/create', taskValidate, auth, isAdmin, create)
 
 
 /**
@@ -56,7 +59,7 @@ router.post('/api/admin/create',taskValidate,auth,isAdmin,create)
  *       200:
  *         description: Users list
  */
-router.get('/api/admin/view',auth,isAdmin,viewUser)
+router.get('/api/admin/view', auth, isAdmin, viewUser)
 
 /**
  * @swagger
@@ -84,8 +87,8 @@ router.get('/api/admin/view',auth,isAdmin,viewUser)
  *       200:
  *         description: Status updated
  */
-router.post('/api/admin/update-status',updateValidate,auth,isAdmin,updateStatus)
+router.post('/api/admin/update-status', updateValidate, auth, isAdmin, updateStatus)
 
 
 
-module.exports=router
+module.exports = router
