@@ -37,7 +37,7 @@ const login = async (req, res, next) => {
         }
         const isMatch = await bcrypt.compare(password, user.hashedPassword)
         if (!isMatch) {
-            return res.status(401).json({
+            return res.status(403).json({
                 success: false,
                 message: 'invalid password'
             })
@@ -47,7 +47,7 @@ const login = async (req, res, next) => {
             process.env.MY_SECRET_KEY,
             { expiresIn: '1h' }
         )
-        res.json({
+        res.status(201).json({
             message: 'login success',
             token
         })
