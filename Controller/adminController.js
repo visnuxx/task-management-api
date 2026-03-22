@@ -46,37 +46,26 @@ const create = async (req, res, next) => {
 }
 
 
-//view users
-const viewUser = async (req, res) => {
+const viewUser = async (req, res, next) => {
    try {
-      var page = Number(req.query.page)
-      var limit = Number(req.query.limit)
 
-      if (!Number.isInteger(page) || page < 1) page = 1
-      if (!Number.isInteger(limit) || limit < 2) limit = 3
 
-      const offset = (page - 1) * limit;
 
-      var [userData] = await pool.execute
-         (
-            `
-            SELECT 
-                u.id,
-                u.name,
-                u.email,
-                t.title,
-                t.status,
-                t.created_at
-            FROM users u
-            LEFT JOIN task t
-                ON t.user_id = u.id
-            ORDER BY u.id
-            LIMIT ${limit} OFFSET ${offset};
-           
-            `,
+      let page = Number(req.query.page);
+      let limit = Number(req.query.limit);
 
-         )
-      // console.log(userData)
+      if (!Number.isInteger(page) || page < 1) page = 1;
+      if (!Number.isInteger(limit) || limit < 2) limit = 1;
+
+      const skip = (page - 1) * limit;
+
+      const userData = await Users.find({ role: "user" }, {
+         name: 1,
+         email: 1
+      }).limit(limit).skip(skip)
+
+
+
       res.status(200).json({
          success: true,
          userData
