@@ -58,32 +58,22 @@ const login = async (req, res, next) => {
 
 
 
-const profile = async (req, res) => {
+const profile = async (req, res,next) => {
     try {
         const userId = req.user.id;
-        // console.log('Decoded user:', req.user);
 
-        const [row] = await pool.execute(
-            `SELECT 
-                u.id AS user_id,
-                u.name,
-                u.email,
-                t.id AS task_id,
-                t.title,
-                t.status
-             FROM users u
-             LEFT JOIN task t ON u.id = t.user_id
-             WHERE u.id = ?`,
+        console.log(userId)
+        const result = await Users.findOne({ _id: userId }, { name: true, email: true, task: true })
 
-            [userId])
-        if (row.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: 'user not found'
+        console.log(result)
+        if (!result) {
+            return res.json({
+                success:false,
+                message:'user not found'
             })
         }
-        const data = row[0]
-        res.json(data)
+        
+        res.json(result)
 
     } catch (error) {
         next(error)
