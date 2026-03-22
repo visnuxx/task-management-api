@@ -26,26 +26,21 @@ const taskValidate = (req, res, next) => {
 }
 const updateValidate = (req, res, next) => {
     try {
-        var { status, title, user_id } = req.body
+        var { title, name } = req.body
 
-        if (!status || !title || !user_id) {
+        if (  !title || !name) {
             return res.status(406).json({
                 success: false,
                 message: 'not valid title or user_id'
             })
         }
-        if (title.trim().length < 3 || title === " ") {
+        if (title.trim().length < 2 || title === " ") {
             return res.status(406).json({
                 success: false,
                 message: 'not valid title'
             })
         }
-        if (status.trim() !== 'done') {
-            return res.status(406).json({
-                success: false,
-                message: 'not valid status'
-            })
-        }
+       
     }
     catch (error) {
         next(error)

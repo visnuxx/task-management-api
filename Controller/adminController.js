@@ -78,21 +78,22 @@ const viewUser = async (req, res, next) => {
 
 updateStatus = async (req, res, next) => {
    try {
-      const { status, title, user_id } = req.body
+      const { title, name } = req.body
 
 
-      const [result] = await pool.execute('UPDATE task SET status = ? WHERE title = ? AND user_id = ?',
-         [status, title, user_id])
-      if (result.affectedRows === 0) {
-         res.status(404).json({
-            success: false,
-            message: 'no users found'
-         })
-      }
+     const result=await Users.updateOne({name:name,"task.title":title},{$set: {"task.$.status":"completed"}})
       res.json({
          success: true,
          message: 'updated successfully'
       })
+
+      if (result.modifiedCount===0) {
+         return res.status(404).json({
+            success: false,
+            message: 'user not found',
+
+         })
+      }
    } catch (error) {
       next(error)
    }
